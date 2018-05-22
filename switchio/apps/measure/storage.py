@@ -33,8 +33,8 @@ min_size = 30
 
 
 def moving_avg(x, n=100):
-    '''Compute the windowed arithmetic mean of `x` with window length `n`
-    '''
+    """Compute the windowed arithmetic mean of `x` with window length `n`
+    """
     n = min(x.size, n)
     cs = pd.np.cumsum(x)
     cs[n:] = cs[n:] - cs[:-n]

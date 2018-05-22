@@ -21,7 +21,7 @@ def build_originate_cmd(dest_url, uuid_str=None, profile='external',
                         abs_codec='',
                         xheaders=None,
                         **kwargs):
-    '''Return a formatted `originate` command string conforming
+    """Return a formatted `originate` command string conforming
     to the syntax dictated by mod_commands of the form:
 
     ``originate <call url> <exten>|&<application_name>(<app_args>) [<dialplan>]
@@ -42,7 +42,7 @@ def build_originate_cmd(dest_url, uuid_str=None, profile='external',
     originate command : string or callable
         full cmd string if uuid_str is not None,
         else callable f(uuid_str) -> full cmd string
-    '''
+    """
     # default params setup
     params = {
         'originate_timeout': timeout,

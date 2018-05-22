@@ -53,20 +53,20 @@ def handle_result(task, log, model):
 
 
 class EventLoop(object):
-    '''Processes ESL events using a background (thread) ``asyncio`` event loop
+    """Processes ESL events using a background (thread) ``asyncio`` event loop
     and one ``aioesl`` connection.
-    '''
+    """
     HOST = '127.0.0.1'
     PORT = '8021'
     AUTH = 'ClueCon'
 
     def __init__(self, host=HOST, port=PORT, auth=AUTH, app_id_headers=None,
                  loop=None):
-        '''
+        """
         :param str host: Hostname or IP addr of the FS server
         :param str port: Port on which the FS process is listening for ESL
         :param str auth: Authentication password for connecting via ESL
-        '''
+        """
         self.host = host
         self.port = port
         self.auth = auth
@@ -109,17 +109,17 @@ class EventLoop(object):
 
     @property
     def epoch(self):
-        '''Time first event was received from server'''
+        """Time first event was received from server"""
         return self._epoch
 
     @property
     def uptime(self):
-        '''Uptime in minutes as per last received event time stamp'''
+        """Uptime in minutes as per last received event time stamp"""
         return (self._fs_time - self._epoch) / 60.0
 
     def is_alive(self):
-        '''Return bool indicating if event loop thread is running.
-        '''
+        """Return bool indicating if event loop thread is running.
+        """
         return self._thread.is_alive() if self._thread else False
 
     def is_running(self):
@@ -129,7 +129,7 @@ class EventLoop(object):
         return self._running
 
     def connected(self, **kwargs):
-        '''Return a bool representing the aggregate cons status'''
+        """Return a bool representing the aggregate cons status"""
         return self._con.connected(**kwargs)
 
     def _run_loop(self, debug):
@@ -154,8 +154,8 @@ class EventLoop(object):
             self._thread.start()
 
     def connect(self, loop=None, timeout=3, debug=False, **conn_kwargs):
-        '''Initialize underlying receive connection.
-        '''
+        """Initialize underlying receive connection.
+        """
         # TODO: once we remove SWIG/py27 support this check can be removed
         if self.connected() and self.is_alive():
             raise utils.ConfigurationError(
@@ -189,9 +189,9 @@ class EventLoop(object):
         return tuple(tasks)
 
     def start(self):
-        '''Start this loop's listen coroutine and start processing
+        """Start this loop's listen coroutine and start processing
         all received events.
-        '''
+        """
         self.log.debug("Starting event loop server")
         if not self._con.connected():
             raise utils.ConfigurationError("you must call 'connect' first")
@@ -205,8 +205,8 @@ class EventLoop(object):
         return self._thread.join(timeout) if self._thread else None
 
     async def _listen_forever(self):
-        '''Process events until stopped
-        '''
+        """Process events until stopped
+        """
         self.log.debug("starting listen loop")
         self._running = True
         while self._con.connected():
@@ -240,7 +240,7 @@ class EventLoop(object):
         self._running = False
 
     async def _process_event(self, e, evname):
-        '''Process an ESL event by delegating to the appropriate handler
+        """Process an ESL event by delegating to the appropriate handler
         and any succeeding callback chain. This is the core handler lookup
         routine and should be optimized for speed.
 
@@ -250,7 +250,7 @@ class EventLoop(object):
 
         :param dict e: event received over esl
         :param str evname: event type/name string
-        '''
+        """
         # epoch is the time when first event is received
         if self._epoch:
             self._fs_time = get_event_time(e)
@@ -365,7 +365,7 @@ class EventLoop(object):
         return default
 
     def waitfor(self, sess, varname, timeout=None):
-        '''Wait on a boolen variable `varname` to be set to true for
+        """Wait on a boolen variable `varname` to be set to true for
         session `sess` as read from `sess.vars['varname']`.
         This call blocks until the attr is set to `True` most usually
         by a callback.
@@ -373,7 +373,7 @@ class EventLoop(object):
         WARNING
         -------
         Do not call this from the event loop thread!
-        '''
+        """
         # retrieve cached event/blocker if possible
         event = mp.Event() if not self._blockers else self._blockers.pop()
         waiters = self._sess2waiters.setdefault(sess, {})  # sess -> {vars: ..}
@@ -404,13 +404,13 @@ class EventLoop(object):
         return res
 
     def disconnect(self, **con_kwargs):
-        '''Shutdown this event loop's bg thread and disconnect all esl sockets.
+        """Shutdown this event loop's bg thread and disconnect all esl sockets.
 
         WARNING
         -------
         This method should not be called by the event loop thread or you may
         see an indefinite block!
-        '''
+        """
         self.log.info(
             "Disconnecting event loop '{}' from '{}'"
             .format(self._id, self.host))
@@ -424,8 +424,8 @@ class EventLoop(object):
             return self._con.disconnect(**con_kwargs)
 
     def _stop(self):
-        '''Stop bg thread and event loop.
-        '''
+        """Stop bg thread and event loop.
+        """
         if current_thread() is self._thread:
             self.log.warn("Stop called from event loop thread?")
 
@@ -501,7 +501,7 @@ class EventLoop(object):
         self._handlers[evname] = handler
 
     def add_callback(self, evname, ident, callback, *args, **kwargs):
-        '''Register a callback for events of type `evname` to be called
+        """Register a callback for events of type `evname` to be called
         with provided args, kwargs when an event is received by this event
             loop.
 
@@ -515,7 +515,7 @@ class EventLoop(object):
             received on this event loop's rx connection
         args, kwargs : initial arguments which will be partially applied to
             callback right now
-        '''
+        """
         prepend = kwargs.pop('prepend', False)
         # TODO: need to check outputs and error on signature mismatch!
         if not utils.is_callback(callback):
@@ -540,7 +540,7 @@ class EventLoop(object):
             self.callbacks.pop(ident)
 
     def unsubscribe(self, events):
-        '''Unsubscribe this event loop's connection from an events of
+        """Unsubscribe this event loop's connection from an events of
         a cetain type.
 
         Parameters
@@ -548,7 +548,7 @@ class EventLoop(object):
         events : string or iterable
             name of mod_event event type(s) you wish to unsubscribe from
             (FS server will not be told to send you events of this type)
-        '''
+        """
         if self.connected():
             raise utils.ConfigurationError(
                 "you must disconnect this event loop before unsubscribing"
@@ -613,7 +613,7 @@ class EventLoop(object):
 
 def get_event_loop(host, port=EventLoop.PORT, auth=EventLoop.AUTH,
                    **kwargs):
-    '''Event loop factory. When using python 3.5 + an ``asyncio`` based loop
+    """Event loop factory. When using python 3.5 + an ``asyncio`` based loop
     is used.
-    '''
+    """
     return EventLoop(host, port, auth, **kwargs)

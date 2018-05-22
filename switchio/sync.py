@@ -12,12 +12,12 @@ from switchio.api import get_client
 @contextmanager
 def sync_caller(host, port='8021', password='ClueCon',
                 apps={'TonePlay': TonePlay}):
-    '''Deliver a provisioned synchronous caller function.
+    """Deliver a provisioned synchronous caller function.
 
     A caller let's you make a call synchronously returning control once
     it has entered a stable state. The caller returns the active originating
     `Session` and a `waitfor` blocker method as output.
-    '''
+    """
     with get_client(host, port=port, auth=password, apps=apps) as client:
 
         def caller(dest_url, app_name, timeout=30, waitfor=None,

@@ -126,7 +126,7 @@ class Originator(object):
 
     def __init__(self, slavepool, debug=False, auto_duration=True,
                  app_id=None, **kwargs):
-        '''
+        """
         Parameters
         ----------
         slavepool : SlavePool instance
@@ -139,7 +139,7 @@ class Originator(object):
             rate or limit setting
         app_id : str
             id to use
-        '''
+        """
         self.pool = slavepool
         self.iternodes = limiter(slavepool.nodes)
         self.count_calls = self.pool.fast_count
@@ -309,8 +309,8 @@ class Originator(object):
 
     @marks.event_callback("BACKGROUND_JOB")
     def _handle_bj(self, sess, job):
-        '''Check for all jobs complete
-        '''
+        """Check for all jobs complete
+        """
         # if duration == 0 then never schedule hangup events
         if sess and not sess.call.vars.get('noautohangup') and self.duration:
             self.log.debug("scheduling auto hangup for '{}'"
@@ -342,8 +342,8 @@ class Originator(object):
 
     @marks.event_callback("CHANNEL_ORIGINATE")
     def _handle_originate(self, sess):
-        '''Set the call duration
-        '''
+        """Set the call duration
+        """
         # use our tx for session commands
         # with sess(self.ctl._con):
         # sess.con = self.ctl._con
@@ -367,8 +367,8 @@ class Originator(object):
         return self._total_originated_sessions
 
     def _burst_loop(self):
-        '''Originate calls via a bgapi/originate call in a loop
-        '''
+        """Originate calls via a bgapi/originate call in a loop
+        """
         originated = 0
         count_calls = self.count_calls
         iterappids = self.iterappids
@@ -465,13 +465,13 @@ class Originator(object):
                           init_state, self.state))
 
     def check_state(self, ident):
-        '''Compare current state to ident
-        '''
+        """Compare current state to ident
+        """
         return self._state.value == getattr(State, ident)
 
     def stopped(self):
-        '''Return bool indicating if in the stopped state.
-        '''
+        """Return bool indicating if in the stopped state.
+        """
         return self._state.value == State.STOPPED
 
     def start(self):
@@ -507,10 +507,10 @@ class Originator(object):
         return self._thread.is_alive() if self._thread else False
 
     def stop(self):
-        '''
+        """
         Stop originate loop if currently originating sessions.
         Change state ORIGINATING -> STOPPED
-        '''
+        """
         if not self.check_state("STOPPED"):
             self.log.info("Stopping sessions origination loop...")
         else:
@@ -519,8 +519,8 @@ class Originator(object):
         self._burst.clear()  # signal to stop the burst loop
 
     def hupall(self):
-        '''Send the 'hupall' command to hangup all active calls.
-        '''
+        """Send the 'hupall' command to hangup all active calls.
+        """
         self.log.warn("Stopping all calls with hupall!")
         # set stopped state - no further bursts will be scheduled
         self.stop()
@@ -534,9 +534,9 @@ class Originator(object):
         return self.pool.evals("client.cmd('hupall')")
 
     def shutdown(self):
-        '''Shutdown this originator instance and hanging up all
+        """Shutdown this originator instance and hanging up all
         active calls and triggering the burst loop to exit.
-        '''
+        """
         if self.pool.count_sessions():
             self.hupall()
         else:

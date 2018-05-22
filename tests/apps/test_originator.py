@@ -1,13 +1,13 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-'''
+"""
 `Originator` testing
 
 .. note::
     these tests assume that the `external` sip profile's context
     has been assigned to the switchio dialplan.
-'''
+"""
 from __future__ import division
 import time
 import math
@@ -81,8 +81,8 @@ def test_rep_fields(get_orig):
 
 
 def test_dtmf_passthrough(get_orig):
-    '''Test the dtmf app in coordination with the originator
-    '''
+    """Test the dtmf app in coordination with the originator
+    """
     orig = get_orig('doggy', offer=1)
     orig.load_app(dtmf.DtmfChecker)
     orig.duration = 0

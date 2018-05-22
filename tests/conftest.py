@@ -11,8 +11,8 @@ from switchio import utils
 
 
 def pytest_addoption(parser):
-    '''Add server options for pointing to the engine we will use for testing
-    '''
+    """Add server options for pointing to the engine we will use for testing
+    """
     parser.addoption("--fshost", action="store", dest='fshost',
                      default=None,
                      help="fs-engine server host or ip")
@@ -84,9 +84,9 @@ def containers(request, confdir):
 
 @pytest.fixture(scope='session')
 def fshosts(request, log):
-    '''Return the FS test server hostnames passed via the
+    """Return the FS test server hostnames passed via the
     ``--fshost`` cmd line arg.
-    '''
+    """
     argstring = request.config.option.fshost
     addrs = []
 
@@ -114,17 +114,17 @@ def fshosts(request, log):
 
 @pytest.fixture(scope='session')
 def fs_ip_addrs(fshosts):
-    '''Convert provided host names to ip addrs via dns.
-    '''
+    """Convert provided host names to ip addrs via dns.
+    """
     return list(map(utils.ncompose(
                 socket.gethostbyname, socket.getfqdn), fshosts))
 
 
 @pytest.fixture(scope='session')
 def fs_socks(request, fshosts):
-    '''Return the fshost,fsport values as tuple (str, int).
+    """Return the fshost,fsport values as tuple (str, int).
     Use port 5080 (fs external profile) by default.
-    '''
+    """
     return list(zip(fshosts, itertools.repeat(request.config.option.fsport)))
 
 
@@ -158,8 +158,8 @@ def cps(request, travis):
 
 @pytest.yield_fixture
 def con(fshost):
-    '''Deliver a esl connection to fshost
-    '''
+    """Deliver a esl connection to fshost
+    """
     from switchio.connection import get_connection
     with get_connection(fshost) as con:
         yield con
@@ -192,9 +192,9 @@ def client(fshost):
 
 @pytest.fixture
 def scenarios(request, fs_socks, loglevel):
-    '''Provision and return a SIPp scenario with the remote proxy set to the
+    """Provision and return a SIPp scenario with the remote proxy set to the
     current FS server.
-    '''
+    """
     sipp = spawn.find_executable('sipp')
     if not sipp:
         pytest.skip("SIPp is required to run call/speed tests")

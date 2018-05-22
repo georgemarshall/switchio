@@ -37,8 +37,8 @@ class Events(object):
         return '{}({})'.format(type(self).__name__, repr(self._events))
 
     def update(self, event):
-        '''Append an ESL.ESLEvent
-        '''
+        """Append an ESL.ESLEvent
+        """
         self._events.appendleft(event)
 
     def __len__(self):
@@ -60,10 +60,10 @@ class Events(object):
         return default
 
     def __getitem__(self, key):
-        '''Return either the value corresponding to variable 'key'
+        """Return either the value corresponding to variable 'key'
         or if type(key) == (int or slice) then return the corresponding
         event from the internal deque
-        '''
+        """
         value = self.get(key)
         if value:
             return value
@@ -80,8 +80,8 @@ class Events(object):
 
 
 class Session(object):
-    '''Session API and state tracking.
-    '''
+    """Session API and state tracking.
+    """
     create_ev = 'CHANNEL_CREATE'
 
     # TODO: eventually uuid should be removed
@@ -137,13 +137,13 @@ class Session(object):
                            .format(key, self.uuid))
 
     def get(self, key, default=None):
-        '''Get latest event header field for `key`.
-        '''
+        """Get latest event header field for `key`.
+        """
         return self.events.get(key, default)
 
     def update(self, event):
-        '''Update state/data using an ESL.ESLEvent
-        '''
+        """Update state/data using an ESL.ESLEvent
+        """
         self.events.update(event)
 
     def __enter__(self, connection):
@@ -159,9 +159,9 @@ class Session(object):
 
     @property
     def host(self):
-        '''Return the hostname/ip address for the host which this session is
+        """Return the hostname/ip address for the host which this session is
         currently active
-        '''
+        """
         return self.con.host
 
     @property
@@ -249,28 +249,28 @@ class Session(object):
         return self.recv('CHANNEL_ANSWER')
 
     def hangup(self, cause='NORMAL_CLEARING'):
-        '''Hangup this session with the provided `cause` hangup type keyword.
-        '''
+        """Hangup this session with the provided `cause` hangup type keyword.
+        """
         self.con.api('uuid_kill {} {}'.format(self.uuid, cause))
         return self.recv('CHANNEL_HANGUP')
 
     def sched_hangup(self, timeout, cause='NORMAL_CLEARING'):
-        '''Schedule this session to hangup after `timeout` seconds.
-        '''
+        """Schedule this session to hangup after `timeout` seconds.
+        """
         self.con.api('sched_hangup +{} {} {}'.format(timeout,
                      self.uuid, cause))
 
     def clear_tasks(self):
-        '''Clear all scheduled tasks for this session.
-        '''
+        """Clear all scheduled tasks for this session.
+        """
         self.con.api('sched_del {}'.format(self.uuid))
 
     def sched_dtmf(self, delay, sequence, tone_duration=None):
-        '''Schedule dtmf sequence to be played on this channel.
+        """Schedule dtmf sequence to be played on this channel.
 
         :param float delay: scheduled future time when dtmf tones should play
         :param str sequence: sequence of dtmf digits to play
-        '''
+        """
         cmd = 'sched_api +{} none uuid_send_dtmf {} {}'.format(
             delay, self.uuid, sequence)
         if tone_duration is not None:
@@ -279,20 +279,20 @@ class Session(object):
         return self.con.api(cmd)
 
     def send_dtmf(self, sequence, duration='w'):
-        '''Send a dtmf sequence with constant tone durations
-        '''
+        """Send a dtmf sequence with constant tone durations
+        """
         # XXX looks like a bug with uuid_send_dtmf sending
         self.con.api('uuid_send_dtmf {} {} @{}'.format(
                      self.uuid, sequence, duration), errcheck=False)
 
     def playback(self, args, start_sample=None, endless=False,
                  leg='aleg', params=None):
-        '''Playback a file on this session
+        """Playback a file on this session
 
         :param str args: arguments or path to audio file for playback app
         :type args: str or tuple
         :param str leg: call leg to transmit the audio on
-        '''
+        """
         app = 'endless_playback' if endless else 'playback'
         pairs = ('='.join(map(str, pair))
                  for pair in params.items()) if params else ''
@@ -311,13 +311,13 @@ class Session(object):
         self.execute(app, args, params=varset)
 
     def start_record(self, path, rx_only=False, stereo=False, rate=16000):
-        '''Record audio from this session to a local file on the slave filesystem
+        """Record audio from this session to a local file on the slave filesystem
         using the `record_session`_ cmd. By default recordings are sampled at
         16kHz.
 
         .. _record_session:
             https://freeswitch.org/confluence/display/FREESWITCH/record_session
-        '''
+        """
         if rx_only:
             self.setvar('RECORD_READ_ONLY', 'true')
         elif stereo:
@@ -327,12 +327,12 @@ class Session(object):
         self.execute('record_session', path)
 
     def stop_record(self, path='all', delay=0):
-        '''Stop recording audio from this session to a local file on the slave
+        """Stop recording audio from this session to a local file on the slave
         filesystem using the `stop_record_session`_ cmd.
 
         .. _stop_record_session:
             https://freeswitch.org/confluence/display/FREESWITCH/mod_dptools%3A+stop_record_session
-        '''
+        """
         if delay:
             self.execute(
                 "sched_api",
@@ -343,24 +343,24 @@ class Session(object):
             self.execute('stop_record_session', path)
 
     def record(self, action, path, rx_only=True):
-        '''Record audio from this session to a local file on the slave filesystem
+        """Record audio from this session to a local file on the slave filesystem
         using the `uuid_record`_ command:
 
             ``uuid_record <uuid> [start|stop|mask|unmask] <path> [<limit>]``
 
         .. _uuid_record:
             https://freeswitch.org/confluence/display/FREESWITCH/mod_commands#mod_commands-uuid_record
-        '''
+        """
         self.con.api('uuid_record {} {} {}'.format(self.uuid, action, path))
 
     def echo(self):
-        '''Echo back all audio recieved.
-        '''
+        """Echo back all audio recieved.
+        """
         self.execute('echo')
 
     def bypass_media(self, state):
-        '''Re-invite a bridged node out of the media path for this session
-        '''
+        """Re-invite a bridged node out of the media path for this session
+        """
         if state:
             self.con.api('uuid_media off {}'.format(self.uuid))
         else:
@@ -376,8 +376,8 @@ class Session(object):
         self.con.api('avmd {} stop'.format(self.uuid))
 
     def park(self):
-        '''Park this session
-        '''
+        """Park this session
+        """
         self.con.api('uuid_park {}'.format(self.uuid))
         return self.recv('CHANNEL_PARK')
 
@@ -434,8 +434,8 @@ class Session(object):
         )
 
     def breakmedia(self):
-        '''Stop playback of media on this session and move on in the dialplan.
-        '''
+        """Stop playback of media on this session and move on in the dialplan.
+        """
         # XXX looks like a bug with uuid_break returning '-ERR no reply'
         self.con.api('uuid_break {}'.format(self.uuid), errcheck=False)
 
@@ -494,8 +494,8 @@ class Session(object):
 
 
 class Call(object):
-    '''A collection of sessions which together compose a "phone call".
-    '''
+    """A collection of sessions which together compose a "phone call".
+    """
     def __init__(self, uuid, session):
         self.uuid = uuid
         self.sessions = deque()
@@ -524,14 +524,14 @@ class Call(object):
 
     @property
     def last(self):
-        '''A reference to the session making up the final leg of this call
-        '''
+        """A reference to the session making up the final leg of this call
+        """
         return self._lastref
 
     @property
     def first(self):
-        '''A reference to the session making up the initial leg of this call
-        '''
+        """A reference to the session making up the initial leg of this call
+        """
         return self._firstref
 
     def get_peer(self, sess):
@@ -548,13 +548,13 @@ class Call(object):
 
 
 class Job(object):
-    '''A background job future.
+    """A background job future.
     The interface closely matches `multiprocessing.pool.AsyncResult`.
 
     :param str uuid: job uuid returned directly by SOCKET_DATA event
     :param str sess_uuid: optional session uuid if job is associated with an
         active FS session
-    '''
+    """
     def __init__(self, future=None, sess_uuid=None, callback=None,
                  event=None, client_id=None, con=None, kwargs={}):
         self.fut = future
@@ -598,8 +598,8 @@ class Job(object):
 
     @property
     def result(self):
-        '''The final result
-        '''
+        """The final result
+        """
         return self.get()
 
     def done(self):
@@ -627,15 +627,15 @@ class Job(object):
         return self._result
 
     def fail(self, resp, *args, **kwargs):
-        '''Fail this job optionally adding an exception for its result
-        '''
+        """Fail this job optionally adding an exception for its result
+        """
         self._failed = True
         self._result = JobError(self(resp, *args, **kwargs))
 
     def get(self, timeout=None):
-        '''Get the result for this job waiting up to `timeout` seconds.
+        """Get the result for this job waiting up to `timeout` seconds.
         Raises `TimeoutError` on if job does complete within alotted time.
-        '''
+        """
         ready = self._sig.wait(timeout)
         if ready:
             return self._result
@@ -644,22 +644,22 @@ class Job(object):
                                .format(timeout))
 
     def ready(self):
-        '''Return bool indicating whether job has completed
-        '''
+        """Return bool indicating whether job has completed
+        """
         return self._sig.is_set()
 
     def wait(self, timeout=None):
-        '''Wait until job has completed or `timeout` has expired
-        '''
+        """Wait until job has completed or `timeout` has expired
+        """
         self._sig.wait(timeout)
 
     def successful(self):
-        '''Return bool determining whether job completed without error
-        '''
+        """Return bool determining whether job completed without error
+        """
         assert self.ready(), 'Job has not completed yet'
         return not self._failed
 
     def update(self, event):
-        '''Update job state/data using an event
-        '''
+        """Update job state/data using an event
+        """
         self.events.update(event)

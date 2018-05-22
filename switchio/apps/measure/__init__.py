@@ -207,9 +207,9 @@ def load(path, **kwargs):
 
 
 def load_legacy(array):
-    '''Load a pickeled numpy structured array from the filesystem into a
+    """Load a pickeled numpy structured array from the filesystem into a
     `DataFrame`.
-    '''
+    """
     if not storage.pd:
         raise RuntimeError("pandas is required to load legacy data sets")
 

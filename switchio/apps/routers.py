@@ -32,8 +32,8 @@ class Proxier(object):
 
 @app
 class Bridger(object):
-    '''Bridge sessions within a call an arbitrary number of times.
-    '''
+    """Bridge sessions within a call an arbitrary number of times.
+    """
     def prepost(self):
         self.log = utils.get_logger(self.__class__.__name__)
         self.call2entries = Counter()
@@ -43,11 +43,11 @@ class Bridger(object):
 
     @callback("CHANNEL_PARK")
     def on_park(self, sess):
-        '''Bridge per session for a given call using the argument spec
+        """Bridge per session for a given call using the argument spec
         provided in `count2bridgeargs`. If the value for a given count is
         `proxy` then simply proxy the session to the initial request uri
         destination.
-        '''
+        """
         call = sess.call
         self.call2entries[call] += 1
         args = self.count2bridgeargs.get(self.call2entries[call])
@@ -110,14 +110,14 @@ class PatternRegistrar(object):
 
 @app
 class Router(object):
-    '''Route sessions using registered callback functions (decorated as
+    """Route sessions using registered callback functions (decorated as
     "routes") which are pattern matched based on selected channel variable
     contents.
 
     Requires that the handling SIP profile had been configured to use the
     'switchio' dialplan context or at the very least a context which contains a
     park action extension.
-    '''
+    """
     # Signal a routing halt
     class StopRouting(Exception):
         """Signal a router to discontinue execution.

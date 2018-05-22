@@ -1,10 +1,10 @@
-'''
+"""
 Shared memory array implementation for numpy which delegates all the nasty
 stuff to multiprocessing.sharedctypes.
 
 Copyright (c) 2010, David Baddeley
 All rights reserved.
-'''
+"""
 # Licensced under the BSD liscence ...
 #
 # Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@ from numpy import ctypeslib
 
 
 class shmarray(numpy.ndarray):
-    '''subclass of ndarray with overridden pickling functions which record
+    """subclass of ndarray with overridden pickling functions which record
     dtype, shape etc... but defer pickling of the underlying data to the
     original data source.
 
@@ -50,7 +50,7 @@ class shmarray(numpy.ndarray):
 
     TODO - add argument checking to ensure that the user is passing reasonable
     values.
-    '''
+    """
     def __new__(cls, ctypesArray, shape, dtype=float, strides=None, offset=0,
                 order=None):
         # some magic (copied from numpy.ctypeslib) to make sure the ctypes
@@ -76,12 +76,12 @@ class shmarray(numpy.ndarray):
         self.ctypesArray = getattr(obj, 'ctypesArray', None)
 
     def __reduce_ex__(self, protocol):
-        '''delegate pickling of the data to the underlying storage, but keep copies
+        """delegate pickling of the data to the underlying storage, but keep copies
         of shape, dtype & strides.
 
         TODO - find how to get at the offset and order parameters and keep
         track of them as well.
-        '''
+        """
         return shmarray, (
             self.ctypesArray, self.shape, self.dtype, self.strides)
         # , self.offset, self.order)
@@ -91,10 +91,10 @@ class shmarray(numpy.ndarray):
 
 
 def create(shape, dtype='d', alignment=32):
-    '''Create an uninitialised shared array. Avoid object arrays, as these
+    """Create an uninitialised shared array. Avoid object arrays, as these
     will almost certainly break as the objects themselves won't be stored in
     shared memory, only the pointers
-    '''
+    """
     shape = numpy.atleast_1d(shape).astype('i')
     dtype = numpy.dtype(dtype)
 
@@ -135,18 +135,18 @@ def zeros(shape, dtype='d'):
 
 
 def ones(shape, dtype='d'):
-    '''Create an shared array initialised to ones. Avoid object arrays, as these
+    """Create an shared array initialised to ones. Avoid object arrays, as these
     will almost certainly break as the objects themselves won't be stored in
     shared memory, only the pointers
-    '''
+    """
     sa = create(shape, dtype=dtype)
     sa[:] = numpy.ones(1, dtype)
     return sa
 
 
 def create_copy(a):
-    '''create a a shared copy of an array
-    '''
+    """create a a shared copy of an array
+    """
     # create an empty array
     b = create(a.shape, a.dtype)
     # copy contents across

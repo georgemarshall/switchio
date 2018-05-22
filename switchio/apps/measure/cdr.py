@@ -46,8 +46,8 @@ def call_metrics(df):
 
 
 # def hcm(df):
-#     ''''Hierarchical indexed call metrics
-#     '''
+#     """Hierarchical indexed call metrics
+#     """
 #     cm = call_metrics(df)
 #     return pd.DataFrame(
 #         cm.values,

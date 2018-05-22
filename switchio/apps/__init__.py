@@ -1,9 +1,9 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-'''
+"""
 Built-in applications
-'''
+"""
 from .. import utils, marks
 from collections import OrderedDict
 import itertools
@@ -15,7 +15,7 @@ _apps = OrderedDict()
 
 
 def app(*args, **kwargs):
-    '''Decorator to register switchio application classes.
+    """Decorator to register switchio application classes.
    Example usage:
 
    .. code-block:: python
@@ -40,7 +40,7 @@ def app(*args, **kwargs):
        @app(name='CoolName')
        class CoolAppController(object):
            pass
-    '''
+    """
     name = kwargs.get('name')
     if len(args) >= 1:
         arg0 = args[0]

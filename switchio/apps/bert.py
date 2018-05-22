@@ -72,10 +72,10 @@ class Bert(object):
 
     @property
     def two_sided(self):
-        '''Toggle whether to run the `bert_test` application
+        """Toggle whether to run the `bert_test` application
         on all sessions of the call. Leaving this `False` means
         all other legs will simply run the `echo` application.
-        '''
+        """
         return self._two_sided
 
     @two_sided.setter
@@ -85,8 +85,8 @@ class Bert(object):
 
     @event_callback('CHANNEL_PARK')
     def on_park(self, sess):
-        '''Knows how to get us riled up
-        '''
+        """Knows how to get us riled up
+        """
         # assumption is that inbound calls will be parked immediately
         if sess.is_inbound():
             pdd = self.pdd or 0

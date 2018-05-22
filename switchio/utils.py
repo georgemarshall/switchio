@@ -41,8 +41,8 @@ TRACE = 5
 
 
 def get_logger(name=None):
-    '''Return the package log or a sub-log for `name` if provided.
-    '''
+    """Return the package log or a sub-log for `name` if provided.
+    """
     log = rlog = logging.getLogger('switchio')
     if name and name != 'switchio':
         log = rlog.getChild(name)
@@ -51,8 +51,8 @@ def get_logger(name=None):
 
 
 def log_to_stderr(level=None):
-    '''Turn on logging and add a handler which writes to stderr
-    '''
+    """Turn on logging and add a handler which writes to stderr
+    """
     log = logging.getLogger()  # the root logger
     if level:
         log.setLevel(level.upper() if not isinstance(level, int) else level)
@@ -95,9 +95,9 @@ def dirinfo(inst):
 
 
 def xheaderify(header_name):
-    '''Prefix the given name with the freeswitch xheader token
+    """Prefix the given name with the freeswitch xheader token
     thus transforming it into an fs xheader variable
-    '''
+    """
     return 'sip_h_X-{}'.format(header_name)
 
 
@@ -139,9 +139,9 @@ def get_name(obj):
 
 
 def event2dict(event):
-    '''Return event serialized data in a python dict
+    """Return event serialized data in a python dict
     Warning: this function is kinda slow!
-    '''
+    """
     return json.loads(event.serialize('json').replace('\t', ''))
 
 
@@ -197,8 +197,8 @@ def uuid():
 
 
 def get_event_time(event, epoch=0.0):
-    '''Return micro-second time stamp value in seconds
-    '''
+    """Return micro-second time stamp value in seconds
+    """
     value = event.get('Event-Date-Timestamp')
     if value is None:
         get_logger().warning("Event '{}' has no timestamp!?".format(
@@ -226,8 +226,8 @@ class Timer(object):
 
     @property
     def last_time(self):
-        '''Last time the timer was reset
-        '''
+        """Last time the timer was reset
+        """
         return self._last
 
 

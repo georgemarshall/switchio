@@ -11,8 +11,8 @@ from switchio.apps.players import TonePlay, PlayRec
 
 
 def test_toneplay(fsip):
-    '''Test the synchronous caller with a simple toneplay
-    '''
+    """Test the synchronous caller with a simple toneplay
+    """
     with sync_caller(fsip, apps={"TonePlay": TonePlay}) as caller:
         # have the external prof call itself by default
         assert 'TonePlay' in caller.app_names
@@ -30,10 +30,10 @@ def test_toneplay(fsip):
 
 @pytest.mark.skip(reason='FS 1.6+ bug in record events')
 def test_playrec(fsip):
-    '''Test the synchronous caller with a simulated conversation using the the
+    """Test the synchronous caller with a simulated conversation using the the
     `PlayRec` app. Currently this test does no audio checking but merely
     verifies the callback chain is invoked as expected.
-    '''
+    """
     with sync_caller(fsip, apps={"PlayRec": PlayRec}) as caller:
         # have the external prof call itself by default
         caller.apps.PlayRec['PlayRec'].rec_rate = 1
@@ -50,10 +50,10 @@ def test_playrec(fsip):
 
 
 def test_alt_call_tracking_header(fsip):
-    '''Test that an alternate `EventListener.call_tracking_header` (in this
+    """Test that an alternate `EventListener.call_tracking_header` (in this
     case using the 'Caller-Destination-Number' channel variable) can be used
     to associate sessions into calls.
-    '''
+    """
     with sync_caller(fsip) as caller:
         # use the destination number as the call association var
         caller.client.listener.call_tracking_header = 'Caller-Destination-Number'

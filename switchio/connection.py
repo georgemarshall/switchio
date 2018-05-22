@@ -224,8 +224,8 @@ class Connection(object):
                                      loops=loops)
 
     def api(self, cmd, errcheck=True, block=False, timeout=0.5):
-        '''Invoke api command (with error checking by default).
-        '''
+        """Invoke api command (with error checking by default).
+        """
         if not self.connected():
             raise ConnectionError("Call ``connect()`` first")
         self.log.debug("api cmd '{}'".format(cmd))
@@ -247,8 +247,8 @@ class Connection(object):
         return future.result(0.005)
 
     def cmd(self, cmd):
-        '''Return the string-body output from invoking a command.
-        '''
+        """Return the string-body output from invoking a command.
+        """
         event = self.api(cmd, block=True)
         _, body = self._handle_socket_data(event)
         return body

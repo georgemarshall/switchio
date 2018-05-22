@@ -21,13 +21,13 @@ from .connection import get_connection
 
 
 class Client(object):
-    '''Interface for synchronous server control using the esl "inbound method"
+    """Interface for synchronous server control using the esl "inbound method"
     as described here:
     https://wiki.freeswitch.org/wiki/Mod_event_socket#Inbound
 
     Provides a high level api for registering apps, originating calls, and
     managing an event listener and its event loop.
-    '''
+    """
     app_id_header = utils.xheaderify('switchio_app')
 
     def __init__(self, host='127.0.0.1', port='8021', auth='ClueCon',
@@ -271,9 +271,9 @@ class Client(object):
         return self._con.connected()
 
     def api(self, cmd, exc=True, timeout=None):
-        '''Invoke esl api command with error checking
+        """Invoke esl api command with error checking
         Returns an ESL.ESLEvent instance for event type "SOCKET_DATA".
-        '''
+        """
         # NOTE api calls do not require an event loop
         # since we can handle the event processing synchronously
         try:
@@ -284,8 +284,8 @@ class Client(object):
         return event
 
     def cmd(self, cmd):
-        '''Return the string-body output from invoking a command
-        '''
+        """Return the string-body output from invoking a command
+        """
         return self._con.cmd(cmd)
 
     def hupall(self, group_id=None, timeout=5):
@@ -322,7 +322,7 @@ class Client(object):
 
     def bgapi(self, cmd, listener=None, callback=None, client_id=None,
               sess_uuid=None, **jobkwargs):
-        '''Execute a non blocking api call and handle it to completion
+        """Execute a non blocking api call and handle it to completion
 
         Parameters
         ----------
@@ -335,7 +335,7 @@ class Client(object):
             By default the listener calls back the job instance with the
             response from the 'BACKGROUND_JOB' event's body content plus any
             kwargs passed here.
-        '''
+        """
         listener = self._assert_alive(listener)
         con = listener.event_loop._con
         future = con.bgapi(cmd)
@@ -355,7 +355,7 @@ class Client(object):
                   bgapi_kwargs={},
                   rep_fields={},
                   **orig_kwargs):
-        '''Originate a call using FreeSWITCH 'originate' command.
+        """Originate a call using FreeSWITCH 'originate' command.
         A non-blocking bgapi call is used by default.
 
         Parameters
@@ -368,7 +368,7 @@ class Client(object):
         Returns
         -------
         instance of `Job` a background job
-        '''
+        """
         listener = self._assert_alive(listener)
         # gen originating session uuid for tracking call
         uuid_str = uuid_func()
@@ -397,9 +397,9 @@ class Client(object):
 
     @functools.wraps(build_originate_cmd)
     def set_orig_cmd(self, *args, **kwargs):
-        '''Build and cache an originate cmd string for later use
+        """Build and cache an originate cmd string for later use
         as the default input for calls to `originate`
-        '''
+        """
         # by default this inserts a couple placeholders which can be replaced
         # at run time by a format(uuid_str='blah', app_id='foo') call
         xhs = {}
@@ -427,9 +427,9 @@ class Client(object):
 
 @contextmanager
 def get_client(host, port='8021', auth='ClueCon', apps=None):
-    '''A context manager which delivers an active `Client` containing a started
+    """A context manager which delivers an active `Client` containing a started
     `EventListener` with applications loaded that were passed in the `apps` map
-    '''
+    """
     client = Client(
         host, port, auth, listener=handlers.get_listener(host, port, auth)
     )

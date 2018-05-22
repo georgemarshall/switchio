@@ -12,12 +12,12 @@ from ..utils import get_logger
 
 @app
 class DtmfChecker(object):
-    '''Play dtmf tones as defined by the iterable attr `sequence` with
+    """Play dtmf tones as defined by the iterable attr `sequence` with
     tone `duration`. Verify the rx sequence matches what was transmitted.
 
     For each session which is answered start a sequence check. For any session
     that fails digit matching store it locally in the `failed` attribute.
-    '''
+    """
     def prepost(self):
         self.log = get_logger(self.__class__.__name__)
         self.sequence = range(1, 10)

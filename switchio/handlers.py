@@ -64,7 +64,7 @@ class EventListener(object):
             self.event_loop.add_handler(evname, cb)
 
     def register_job(self, future, **kwargs):
-        '''Register for a job to be handled when the appropriate event arrives.
+        """Register for a job to be handled when the appropriate event arrives.
         Once an event corresponding to the job is received, the bgjob event
         handler will 'consume' it and invoke its callback.
 
@@ -78,7 +78,7 @@ class EventListener(object):
         Returns
         -------
         bj : an instance of Job (a background job)
-        '''
+        """
         bj = Job(future, **kwargs)
         self.bg_jobs[bj.uuid] = bj
         return bj
@@ -90,20 +90,20 @@ class EventListener(object):
         return len(self.sessions)
 
     def count_calls(self):
-        '''Count the number of active calls hosted by the slave process
-        '''
+        """Count the number of active calls hosted by the slave process
+        """
         return len(self.calls)
 
     def count_failed(self):
-        '''Return the failed session count
-        '''
+        """Return the failed session count
+        """
         return sum(
             self.hangup_causes.values()
         ) - self.hangup_causes['NORMAL_CLEARING']
 
     def reset(self):
-        '''Clear all internal stats and counters
-        '''
+        """Clear all internal stats and counters
+        """
         self.log.debug('resetting all stats...')
         self.hangup_causes.clear()
         self.failed_jobs = Counter()
@@ -145,12 +145,12 @@ class EventListener(object):
 
     @handler('BACKGROUND_JOB')
     def _handle_bj(self, e):
-        '''Handle bjs and report failures.
+        """Handle bjs and report failures.
         If a job is found in the local cache then update the instance
         with event data.
         This handler returns 'None' on error (i.e. failed bj)
         which must be handled by any callbacks.
-        '''
+        """
         error = False
         consumed = False
         resp = None
@@ -221,9 +221,9 @@ class EventListener(object):
     @handler('CHANNEL_CREATE')
     @handler('CHANNEL_ORIGINATE')
     def _handle_initial_event(self, e):
-        '''Handle channel create events by building local
+        """Handle channel create events by building local
         `Session` and `Call` objects for state tracking.
-        '''
+        """
         uuid = e.get('Unique-ID')
         # Record the newly activated session
         # TODO: pass con as weakref?
@@ -273,12 +273,12 @@ class EventListener(object):
 
     @handler('CHANNEL_ANSWER')
     def _handle_answer(self, e):
-        '''Handle answer events
+        """Handle answer events
 
         Returns
         -------
         sess : session instance corresponding to uuid
-        '''
+        """
         uuid = e.get('Unique-ID')
         sess = self.sessions.get(uuid, None)
         if sess:
@@ -295,13 +295,13 @@ class EventListener(object):
     @handler('CHANNEL_DESTROY')
     # @handler('CHANNEL_HANGUP_COMPLETE')  # XXX: a race between these two...
     def _handle_destroy(self, e):
-        '''Handle channel destroy events.
+        """Handle channel destroy events.
 
         Returns
         -------
         sess : session instance corresponding to uuid
         job  : corresponding bj for a session if exists, ow None
-        '''
+        """
         uuid = e.get('Unique-ID')
         sess = self.sessions.pop(uuid, None)
         direction = sess['Call-Direction'] if sess else 'unknown'

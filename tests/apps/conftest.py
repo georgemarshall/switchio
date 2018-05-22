@@ -7,9 +7,9 @@ import switchio
 
 @pytest.yield_fixture
 def get_orig(request, fsip):
-    '''An `Originator` factory which delivers instances configured to route
+    """An `Originator` factory which delivers instances configured to route
     calls back to the originating sip profile (i.e. in "loopback").
-    '''
+    """
     origs = []
 
     def factory(userpart, port=5080, limit=1, rate=1, offer=1, **kwargs):

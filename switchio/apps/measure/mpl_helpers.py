@@ -25,10 +25,10 @@ plotitems = namedtuple('plotitems', 'mng fig axes artists')
 
 
 def multiplot(df, figspec, fig=None, mng=None, block=False, fname=None):
-    '''Plot selected columns in appropriate axes on a figure using the pandas
+    """Plot selected columns in appropriate axes on a figure using the pandas
     plotting helpers where possible. `figspec` is a map of subplot location
     tuples to column name iterables.
-    '''
+    """
     # figspec is a map of tuples like: {(row, column): [<column names>]}
     rows, cols = max(figspec)
 

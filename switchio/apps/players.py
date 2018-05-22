@@ -38,13 +38,13 @@ RecInfo = namedtuple("RecInfo", "host caller callee")
 
 @app
 class PlayRec(object):
-    '''Play a recording to the callee and record it onto the local file system
+    """Play a recording to the callee and record it onto the local file system
 
     This app can be used in tandem with MOS scoring to verify audio quality.
     The filename provided must exist in the FreeSWITCH sounds directory such
     that ${FS_CONFIG_ROOT}/${sound_prefix}/<category>/<filename> points to a
     valid wave file.
-    '''
+    """
     timer = utils.Timer()
 
     def prepost(
@@ -155,11 +155,11 @@ class PlayRec(object):
 
     @event_callback("PLAYBACK_STOP")
     def on_stop(self, sess):
-        '''On stop either trigger a new playing of the signal if more
+        """On stop either trigger a new playing of the signal if more
         iterations are required or hangup the call.
         If the current call is being recorded schedule the recordings to stop
         and expect downstream callbacks to schedule call teardown.
-        '''
+        """
         self.log.debug("Finished playing '{}' for session '{}'".format(
                       sess['Playback-File-Path'], sess.uuid))
         if sess.vars['clip'] == 'signal':
@@ -186,11 +186,11 @@ class PlayRec(object):
                         sess.sched_hangup(0.5)  # delay hangup slightly
 
     def trigger_playback(self, sess):
-        '''Trigger clip playback on the given session by doing the following:
+        """Trigger clip playback on the given session by doing the following:
         - Start playing a silence stream on the peer session
         - This will in turn trigger a speech playback on this session in the
         "PLAYBACK_START" callback
-        '''
+        """
         peer = sess.call.get_peer(sess)
         peer.playback(self.silence)  # play infinite silence
         peer.vars['clip'] = 'silence'
@@ -245,10 +245,10 @@ class PlayRec(object):
 class MutedPlayRec(PlayRec):
 
     def trigger_playback(self, sess):
-        '''
+        """
         1) Mute the peer session
         2) Trigger endless clip playback on both sessions
-        '''
+        """
         peer = sess.call.get_peer(sess)
         # mute seems racey so do it twice
         peer.mute()
@@ -279,11 +279,11 @@ class MutedPlayRec(PlayRec):
 
     @event_callback("PLAYBACK_STOP")
     def on_stop(self, sess):
-        '''On stop either swap the mute state of the channels if more
+        """On stop either swap the mute state of the channels if more
         iterations are required or hangup the call.
         If the current call is being recorded schedule the recordings to stop
         and expect downstream callbacks to schedule call teardown.
-        '''
+        """
         self.log.debug("Finished playing '{}' for session '{}'".format(
                       sess['Playback-File-Path'], sess.uuid))
 

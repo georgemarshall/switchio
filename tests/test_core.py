@@ -1,9 +1,9 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
-'''
+"""
 Tests for core components
-'''
+"""
 from __future__ import division
 import time
 import pytest
@@ -33,8 +33,8 @@ def bridge2dest_callback(sess):
 
 
 async def bridge2dest_coroutine(sess):
-    '''Bridge to the dest specified in the req uri
-    '''
+    """Bridge to the dest specified in the req uri
+    """
     if sess['Call-Direction'] == 'inbound':
         sess.bridge(dest_url=sess['variable_sip_req_uri'])
         event = await sess.recv('CHANNEL_ANSWER')
@@ -149,8 +149,8 @@ def checkcalls(scenario, ael, travis):
 
 class TestListener:
     def test_startup(self, el):
-        '''verify internal connections and listener startup
-        '''
+        """verify internal connections and listener startup
+        """
         pytest.raises(utils.ConfigurationError, el.start)
         el.connect()
         assert el.connected()
@@ -168,8 +168,8 @@ class TestListener:
             el.connect(host=addr)
 
     def test_disconnect(self, el):
-        '''Verify we can disconnect after having started the event loop
-        '''
+        """Verify we can disconnect after having started the event loop
+        """
         el.disconnect()  # no-op
         el.connect()
         el.start()
@@ -178,8 +178,8 @@ class TestListener:
         assert not el.connected()
 
     def test_unsub(self, el):
-        '''test event loop unsubscribe for event type
-        '''
+        """test event loop unsubscribe for event type
+        """
         el = el.event_loop
         ev = "CALL_UPDATE"
         default_handlers = dict(el._handlers)
@@ -245,24 +245,24 @@ class TestListener:
 
     @pytest.mark.usefixtures('load_limits')
     def test_track_cps(self, proxy_dp, checkcalls, cps):
-        '''load fs with up to 250 cps and test that we're fast enough
+        """load fs with up to 250 cps and test that we're fast enough
         to track all the created session within a 1 sec period
 
         Note:
         this test may fail intermittently as it depends on the
         speed of the fs server under test
-        '''
+        """
         checkcalls(rate=cps, limit=cps, call_count=cps, duration=4)
 
     @pytest.mark.usefixtures('load_limits')
     def test_track_1kcapacity(self, proxy_dp, checkcalls, cps, travis):
-        '''load fs with up to 1000 simultaneous calls
+        """load fs with up to 1000 simultaneous calls
         and test we (are fast enough to) track all the created sessions
 
         Note:
         this tes may fail intermittently as it depends on the
         speed of the fs server under test
-        '''
+        """
         limit = 1000 if not travis else 500
         duration = limit / cps + 1  # h = E/lambda (erlang formula)
         checkcalls(rate=cps, limit=limit, duration=duration, sleep=duration)
