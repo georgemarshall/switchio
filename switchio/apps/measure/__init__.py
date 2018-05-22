@@ -23,7 +23,7 @@ def plot_df(df, figspec, **kwargs):
 Measurer = namedtuple("Measurer", 'app ppkwargs storer ops')
 
 
-class Measurers(object):
+class Measurers:
     """A dict-like collection of measurement apps with
     sub-references to each app's `DataStorer` and optional metrics
     computing callables.

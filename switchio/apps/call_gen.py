@@ -50,7 +50,7 @@ def limiter(pairs):
         yield pair
 
 
-class WeightedIterator(object):
+class WeightedIterator:
     """Pseudo weighted round robin iterator. Delivers items interleaved
     in weighted order.
     """
@@ -91,7 +91,7 @@ class WeightedIterator(object):
                 self.counts = self.weights.copy()
 
 
-class State(object):
+class State:
     """Enumeration to represent the originator state machine
     """
     __slots__ = ['value']
@@ -110,7 +110,7 @@ class State(object):
         return names[vals.index(self.value)]
 
 
-class Originator(object):
+class Originator:
     """An auto-dialer built for stress testing.
     """
     default_settings = [

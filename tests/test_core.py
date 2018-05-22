@@ -344,7 +344,7 @@ class TestClient:
         cbcount = len(cbs)
 
         # app reject due to mal-typed cb
-        class DumbApp(object):
+        class DumbApp:
             @event_callback('CHANNEL_ANSWER')
             def h0(self, sess):
                 pass
@@ -355,7 +355,7 @@ class TestClient:
 
             # non-function marked obj
             @event_callback('CHANNEL_PARK')
-            class noncb(object):
+            class noncb:
                 pass
 
         with pytest.raises(TypeError):

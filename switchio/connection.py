@@ -108,7 +108,7 @@ async def async_reconnect(host, port, password, prot, loop, log):
                  .format(host, port))
 
 
-class Connection(object):
+class Connection:
     """An ESL connection implemented using an ``asyncio`` TCP protocol.
 
     Consider this API threadsafe.

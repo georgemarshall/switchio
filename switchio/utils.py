@@ -207,7 +207,7 @@ def get_event_time(event, epoch=0.0):
     return float(value) / 1e6 - epoch
 
 
-class Timer(object):
+class Timer:
     """Simple timer that reports an elapsed duration since the last reset.
     """
     def __init__(self, timer=None):

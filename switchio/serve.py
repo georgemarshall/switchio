@@ -9,7 +9,7 @@ from .apps import AppManager
 from .api import get_pool
 
 
-class Service(object):
+class Service:
     """Serve centralized, long running, call processing apps on top of a
     FreeSWITCH cluster.
     """

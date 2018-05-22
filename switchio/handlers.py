@@ -17,7 +17,7 @@ from . import utils
 from .models import Job, Call, Session
 
 
-class EventListener(object):
+class EventListener:
     """``Session``, ``Call`` and ``Job`` tracking through a default set of
     event handlers.
 

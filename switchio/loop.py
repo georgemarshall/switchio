@@ -52,7 +52,7 @@ def handle_result(task, log, model):
         log.exception("{} failed with:".format(task))
 
 
-class EventLoop(object):
+class EventLoop:
     """Processes ESL events using a background (thread) ``asyncio`` event loop
     and one ``aioesl`` connection.
     """

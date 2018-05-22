@@ -20,7 +20,7 @@ from . import marks
 from .connection import get_connection
 
 
-class Client(object):
+class Client:
     """Interface for synchronous server control using the esl "inbound method"
     as described here:
     https://wiki.freeswitch.org/wiki/Mod_event_socket#Inbound

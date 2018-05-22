@@ -10,7 +10,7 @@ from functools import partial, reduce
 from .utils import compose
 
 
-class MultiEval(object):
+class MultiEval:
     """Invoke arbitrary python expressions on a collection of objects
     """
     def __init__(self, slaves, delegator=cycle, accessor='.'):

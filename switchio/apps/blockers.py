@@ -12,7 +12,7 @@ from ..utils import get_logger
 from ..apps import app
 
 @app
-class CalleeBlockOnInvite(object):
+class CalleeBlockOnInvite:
     """Reject all inbound INVITES immediately
 
     If `response` is not specified respond with with 480 Temporarily
@@ -41,7 +41,7 @@ class CalleeBlockOnInvite(object):
 
 
 @app
-class CalleeRingback(object):
+class CalleeRingback:
     """Simulate calls which reach early media but never connect.
 
     `ringback` determines the argument to `Session.playback` which is by

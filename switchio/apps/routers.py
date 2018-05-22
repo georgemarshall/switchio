@@ -15,7 +15,7 @@ from ..apps import app
 
 
 @app
-class Proxier(object):
+class Proxier:
     """Proxy all inbound calls to the destination specified in the SIP
     Request-URI.
 
@@ -31,7 +31,7 @@ class Proxier(object):
 
 
 @app
-class Bridger(object):
+class Bridger:
     """Bridge sessions within a call an arbitrary number of times.
     """
     def prepost(self):
@@ -62,7 +62,7 @@ class Bridger(object):
                        .format(sess.uuid, sess['Bridge-B-Unique-ID']))
 
 
-class PatternRegistrar(object):
+class PatternRegistrar:
     """A `flask`-like pattern to callback registrar.
 
     Allows for registering callback functions (via decorators) which will be
@@ -109,7 +109,7 @@ class PatternRegistrar(object):
 
 
 @app
-class Router(object):
+class Router:
     """Route sessions using registered callback functions (decorated as
     "routes") which are pattern matched based on selected channel variable
     contents.

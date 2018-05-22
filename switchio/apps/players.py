@@ -12,7 +12,7 @@ from ..marks import event_callback
 
 
 @app
-class TonePlay(object):
+class TonePlay:
     """Play a 'milli-watt' tone on the outbound leg and echo it back
     on the inbound
     """
@@ -37,7 +37,7 @@ RecInfo = namedtuple("RecInfo", "host caller callee")
 
 
 @app
-class PlayRec(object):
+class PlayRec:
     """Play a recording to the callee and record it onto the local file system
 
     This app can be used in tandem with MOS scoring to verify audio quality.

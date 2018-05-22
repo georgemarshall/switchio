@@ -19,7 +19,7 @@ def sys_stats(df):
     return df.reindex(range(int(ci.iloc[-1]) + 1)).interpolate()
 
 
-class SysStats(object):
+class SysStats:
     """A switchio app for capturing system performance stats during load test
     using the `psutil`_ module.
 

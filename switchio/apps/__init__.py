@@ -21,7 +21,7 @@ def app(*args, **kwargs):
    .. code-block:: python
 
        @app
-       class CoolAppController(object):
+       class CoolAppController:
            pass
 
        # This will register the class as a switchio app.
@@ -32,13 +32,13 @@ def app(*args, **kwargs):
        # decorator argument:
 
        @app('CoolName')
-       class CoolAppController(object):
+       class CoolAppController:
            pass
 
        # or with a keyword arg:
 
        @app(name='CoolName')
-       class CoolAppController(object):
+       class CoolAppController:
            pass
     """
     name = kwargs.get('name')
@@ -115,7 +115,7 @@ def load(packages=(), imp_excs=('pandas',)):
     return apps_map
 
 
-class AppManager(object):
+class AppManager:
     """Manage apps over a cluster/slavepool.
     """
     def __init__(self, pool, ppfuncargs=None, **kwargs):

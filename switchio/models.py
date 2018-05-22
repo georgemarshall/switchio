@@ -22,7 +22,7 @@ class JobError(utils.ESLError):
     pass
 
 
-class Events(object):
+class Events:
     """Event collection which for most intents and purposes should quack like
     a ``collections.deque``. Data lookups are delegated to the internal deque
     of events in lilo order.
@@ -79,7 +79,7 @@ class Events(object):
             pprint(ev)
 
 
-class Session(object):
+class Session:
     """Session API and state tracking.
     """
     create_ev = 'CHANNEL_CREATE'
@@ -493,7 +493,7 @@ class Session(object):
         return self['Call-Direction'] == 'outbound'
 
 
-class Call(object):
+class Call:
     """A collection of sessions which together compose a "phone call".
     """
     def __init__(self, uuid, session):
@@ -547,7 +547,7 @@ class Call(object):
         return None
 
 
-class Job(object):
+class Job:
     """A background job future.
     The interface closely matches `multiprocessing.pool.AsyncResult`.
 

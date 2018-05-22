@@ -64,7 +64,7 @@ class Terminate(Exception):
 
 
 @store
-class HDFStore(object):
+class HDFStore:
     """HDF5 storage.
     Wraps a `pandas.HDFStore` for use with multiple processes.
     """
@@ -142,7 +142,7 @@ class HDFStore(object):
 
 
 @store
-class CSVStore(object):
+class CSVStore:
     """CSV storage.
     """
     ext = 'csv'
@@ -283,7 +283,7 @@ class CSVStore(object):
         return pd.concat(frames, axis=1) if pd else frames
 
 
-class RingBuffer(object):
+class RingBuffer:
     """A circular buffer interface to a shared `numpy` array
     """
     def __init__(self, dtype, size=2**10):
@@ -340,7 +340,7 @@ class RingBuffer(object):
         return self.bi == 0 and self.ri.value > self._len - 1
 
 
-class DataStorer(object):
+class DataStorer:
     """Receive and store row-oriented data points from switchio apps.
 
     A shared-memory buffer array is used to store the most recently written

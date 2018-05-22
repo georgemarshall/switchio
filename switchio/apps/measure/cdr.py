@@ -96,7 +96,7 @@ call_metrics.figspec = {
 }
 
 
-class CDR(object):
+class CDR:
     """Collect call detail record info including call oriented event time
     stamps and and active sessions data which can be used for per call metrics
     computations.

@@ -173,7 +173,7 @@ def test_measurers(measure, tmpdir, storetype):
         (1, 1): ['ints'],
     }
 
-    class MeasureBuddy(object):
+    class MeasureBuddy:
         fields = [('ints', 'uint32'), ('strs', 'S5')]
         storer_kwargs = {'buf_size': 10}
         operators = {'concat': concat}

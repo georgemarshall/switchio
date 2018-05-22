@@ -11,7 +11,7 @@ from ..utils import get_logger, APIError
 
 
 @app
-class Bert(object):
+class Bert:
     """Call application which runs the bert test application on both
     legs of a call
 
