@@ -66,4 +66,4 @@ Extra helpers for managing a *FreeSWITCH* process cluster.
 * :py:class:`~switchio.distribute.MultiEval` - Invoke arbitrary python
   expressions on a collection of objects.
 * :py:class:`~switchio.distribute.SlavePool` - a subclass which adds
-  oberver component helper methods.
+  observer component helper methods.

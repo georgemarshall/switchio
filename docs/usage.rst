@@ -110,7 +110,7 @@ Let's create and assign an :py:class:`~switchio.handlers.EventListener`::
 
 .. note::
     Alternatively an `EventListener` can be passed to the `Client` at
-    instatiation time.
+    instantiation time.
 
 
 Now let's attempt our `originate` once more this time executing the *9197*

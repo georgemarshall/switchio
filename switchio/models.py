@@ -354,7 +354,7 @@ class Session(object):
         self.con.api('uuid_record {} {} {}'.format(self.uuid, action, path))
 
     def echo(self):
-        """Echo back all audio recieved.
+        """Echo back all audio received.
         """
         self.execute('echo')
 
@@ -634,7 +634,7 @@ class Job(object):
 
     def get(self, timeout=None):
         """Get the result for this job waiting up to `timeout` seconds.
-        Raises `TimeoutError` on if job does complete within alotted time.
+        Raises `TimeoutError` on if job does complete within allotted time.
         """
         ready = self._sig.wait(timeout)
         if ready:

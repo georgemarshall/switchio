@@ -50,7 +50,7 @@ def dial_all(scenarios, did, hosts, expect=True, **extra_settings):
     the standard SIPp call flow.
     """
     finalizers = []
-    # run all scens async
+    # run all scenarios async
     for scenario, host in zip(scenarios, hosts):
         if getattr(scenario, 'agents', None):
             scenario.defaults.update(extra_settings)

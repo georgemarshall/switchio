@@ -5,7 +5,7 @@ stuff to multiprocessing.sharedctypes.
 Copyright (c) 2010, David Baddeley
 All rights reserved.
 """
-# Licensced under the BSD liscence ...
+# Licenced under the BSD licence...
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, # are permitted provided that the following conditions are met:

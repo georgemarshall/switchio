@@ -38,8 +38,8 @@ device under test (set with the `proxy` option).
 For more information on the switchio command line see :doc:`here <cmdline>`.
 
 
-Originating a single call programatically from Python
------------------------------------------------------
+Originating a single call programmatically from Python
+------------------------------------------------------
 Making a call with switchio is quite simple using the built-in
 :py:func:`~switchio.sync.sync_caller` context manager.
 Again, if you've gone through the required :doc:`deployment steps

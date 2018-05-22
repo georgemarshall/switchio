@@ -194,7 +194,7 @@ this involves use of handy cluster helper components provided with
 
 The main trick is to configure each :py:class:`switchio.api.Client` to have
 the appropriate originate command set such that calls are routed to
-where you expect. A clever and succint way to accomplish this is by
+where you expect. A clever and succinct way to accomplish this is by
 using the :py:class:`switchio.distribute.SlavePool`. Luckily the
 `Originator` app is built with one internally by default.
 

@@ -22,7 +22,7 @@ def test_dialer_state(get_orig):
     dialer.load_app(players.TonePlay)
     dialer.duration = 0  # don't auto-hangup
 
-    # ensure intial state interface
+    # ensure initial state interface
     assert dialer.check_state("INITIAL")
 
     # verify initial internal event states

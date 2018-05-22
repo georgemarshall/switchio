@@ -199,7 +199,7 @@ def load(path, **kwargs):
 
         merged = storetype.multiread(storepath, **kwargs)
 
-        # XXX evetually we should support multiple figures
+        # XXX eventually we should support multiple figures
         figspecs = obj.get('figspecs', {})
         figspec = figspecs[tuple(figspecs.keys())[0]]
         merged._plot = partial(plot_df, merged, figspec)
@@ -207,7 +207,7 @@ def load(path, **kwargs):
 
 
 def load_legacy(array):
-    """Load a pickeled numpy structured array from the filesystem into a
+    """Load a pickled numpy structured array from the filesystem into a
     `DataFrame`.
     """
     if not storage.pd:

@@ -206,7 +206,7 @@ class EventListener(object):
                 # reference this job in the corresponding session
                 # self.sessions[resp].bg_job = job
                 sess.bg_job = job
-                self.log.debug("Job '{}' was sucessful".format(
+                self.log.debug("Job '{}' was successful".format(
                                job_uuid))
                 consumed = True
             else:

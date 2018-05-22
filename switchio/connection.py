@@ -4,7 +4,7 @@
 #
 # Copyright (c) 2017 Tyler Goodlet <tgoodlet@gmail.com>
 """
-Asyncio ESL connection abstactions
+Asyncio ESL connection abstractions
 """
 import asyncio
 from functools import partial
@@ -210,7 +210,7 @@ class Connection(object):
             ).result()
 
     async def recv_event(self):
-        """Retreive the latest queued event.
+        """Retrieve the latest queued event.
         """
         queue = self.protocol.event_queue
         event = await queue.get()

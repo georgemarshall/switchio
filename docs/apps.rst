@@ -14,7 +14,7 @@ callbacks** [#]_.
 Apps are somewhat analogous to `extensions`_ in *FreeSWITCH*'s
 `XML dialplan`_ interface and can similarly be activated using any
 `event header`_ *or* `channel variable`_ value of your choosing.
-Callbacks are invoked based on the recieved `event type`_.
+Callbacks are invoked based on the received `event type`_.
 
 
 *Apps* can be implemented each as a standalone Python `namespace`_ which can

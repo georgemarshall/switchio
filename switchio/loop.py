@@ -22,7 +22,7 @@ from .connection import get_connection
 
 @asyncio.coroutine
 def just_yield():
-    """A "just yield" coroutine which triggers an interation of the event loop.
+    """A "just yield" coroutine which triggers an iteration of the event loop.
 
     If you think this is a nightmare to understand have you asked yourself how
     this will ever work once these legacy types of generator "coroutines" are
@@ -295,7 +295,7 @@ class EventLoop(object):
                     )
                     # look up the client's callback chain and run
                     # e -> handler -> cb1, cb2, ... cbN
-                    # XXX assign ret on each interation in an attempt to avoid
+                    # XXX assign ret on each iteration in an attempt to avoid
                     # python's dynamic scope lookup
                     for cb, ret in zip(cbs, itertools.repeat(ret)):
                         try:
@@ -365,7 +365,7 @@ class EventLoop(object):
         return default
 
     def waitfor(self, sess, varname, timeout=None):
-        """Wait on a boolen variable `varname` to be set to true for
+        """Wait on a boolean variable `varname` to be set to true for
         session `sess` as read from `sess.vars['varname']`.
         This call blocks until the attr is set to `True` most usually
         by a callback.
@@ -541,7 +541,7 @@ class EventLoop(object):
 
     def unsubscribe(self, events):
         """Unsubscribe this event loop's connection from an events of
-        a cetain type.
+        a certain type.
 
         Parameters
         ----------
